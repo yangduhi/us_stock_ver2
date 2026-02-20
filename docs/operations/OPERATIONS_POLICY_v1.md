@@ -2,7 +2,7 @@
 
 Version: 1.0  
 Date: 2026-02-20  
-Status: Draft for Owner Approval
+Status: Approved
 
 ## Scope
 
@@ -53,6 +53,13 @@ Guardrail:
 
 ## Approval
 
-- Owner (name/id): `TBD`
-- Approved date: `TBD`
-- Signature/record link: `TBD`
+- Owner (name/id): `Yang (yangduhi)`
+- Approved date: `2026-02-20`
+- Signature/record link: `https://github.com/yangduhi/us_stock_ver2/pull/1`
+
+## Execution Evidence
+
+- CI success on `main`: `https://github.com/yangduhi/us_stock_ver2/actions/runs/22207920396`
+- Secrets/boot checks success:
+  - `https://github.com/yangduhi/us_stock_ver2/actions/runs/22207508885`
+  - `https://github.com/yangduhi/us_stock_ver2/actions/runs/22207507540`

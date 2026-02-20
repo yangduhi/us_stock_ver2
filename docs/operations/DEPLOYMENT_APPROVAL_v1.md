@@ -2,13 +2,13 @@
 
 Version: 1.0  
 Date: 2026-02-20  
-Status: Draft for Owner Approval
+Status: Approved
 
 ## 1) Approvers
 
 Required approvers for production deploy:
-- Primary approver: Repository owner (`TBD_GITHUB_ID`)
-- Secondary approver (backup): (`TBD_GITHUB_ID`)
+- Primary approver: Repository owner (`yangduhi`)
+- Secondary approver (backup): `N/A (single-owner model)`
 
 Rule:
 - At least one required approver must explicitly approve each production release.
@@ -49,6 +49,11 @@ Minimum required actions:
 
 ## Approval
 
-- Final approver list confirmed by: `TBD`
-- Effective date: `TBD`
+- Final approver list confirmed by: `Yang (yangduhi)`
+- Effective date: `2026-02-20`
 - Review date (next): `2026-03-20`
+
+## Execution Evidence
+
+- PR-based merge on protected `main`: `https://github.com/yangduhi/us_stock_ver2/pull/1`
+- CI success on merged commit: `https://github.com/yangduhi/us_stock_ver2/actions/runs/22207920396`
