@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "evaluated_at": "2026-02-19T13:53:39.268201+00:00",
+  "team_root": "D:\\vscode\\us_stock_ver2\\.team_mode_refactor\\20260219_215430",
+  "passed": false,
+  "thresholds": {
+    "min_total_events": 1,
+    "max_deadletter": 0,
+    "max_rejected": 1,
+    "max_replan": 2,
+    "max_verify_failed": 0,
+    "min_approved_ratio": 0.5
+  },
+  "metrics": {
+    "total_events": 10,
+    "deadletter": 0,
+    "approved": 6,
+    "rejected": 0,
+    "replan": 0,
+    "verify_failed": 4,
+    "verify_passed": 2,
+    "approved_ratio": 0.6
+  },
+  "checks": [
+    {
+      "name": "min_total_events",
+      "passed": true,
+      "actual": 10,
+      "expected": 1,
+      "operator": ">=",
+      "message": "min_total_events: 10 >= 1"
+    },
+    {
+      "name": "max_deadletter",
+      "passed": true,
+      "actual": 0,
+      "expected": 0,
+      "operator": "<=",
+      "message": "max_deadletter: 0 <= 0"
+    },
+    {
+      "name": "max_rejected",
+      "passed": true,
+      "actual": 0,
+      "expected": 1,
+      "operator": "<=",
+      "message": "max_rejected: 0 <= 1"
+    },
+    {
+      "name": "max_replan",
+      "passed": true,
+      "actual": 0,
+      "expected": 2,
+      "operator": "<=",
+      "message": "max_replan: 0 <= 2"
+    },
+    {
+      "name": "max_verify_failed",
+      "passed": false,
+      "actual": 4,
+      "expected": 0,
+      "operator": "<=",
+      "message": "max_verify_failed: 4 > 0"
+    },
+    {
+      "name": "min_approved_ratio",
+      "passed": true,
+      "actual": 0.6,
+      "expected": 0.5,
+      "operator": ">=",
+      "message": "min_approved_ratio: 0.6 >= 0.5"
+    }
+  ],
+  "failed_checks": [
+    "max_verify_failed"
+  ]
+}

@@ -1,0 +1,6 @@
+target-version = "py311"
+exclude = ["venv", ".team_mode_refactor", ".agent", ".gemini_logs"]
+
+[lint]
+select = ["E", "F"]
+ignore = ["E501", "E722"]

@@ -1,0 +1,12 @@
+.gemini_logs/
+.team_mode_refactor/
+.agent/
+venv/
+.pytest_cache/
+.ruff_cache/
+.env
+__pycache__/
+*.pyc
+analyzer_debug.log
+api_test_debug.log
+backend/tests/validation.log

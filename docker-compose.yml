@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg14
+    container_name: marketflow_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=marketflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - marketflow_net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:alpine
+    container_name: marketflow_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - marketflow_net
+
+  backend:
+    build: ./backend
+    container_name: marketflow_backend
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/marketflow
+      - REDIS_URL=redis://redis:6379/0
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - FRED_API_KEY=${FRED_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - marketflow_net
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build: ./frontend
+    container_name: marketflow_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1
+    depends_on:
+      - backend
+    networks:
+      - marketflow_net
+
+  scheduler:
+    build: ./backend
+    container_name: marketflow_scheduler
+    volumes:
+      - ./backend:/app
+    environment:
+      - API_URL=http://backend:8000/api/v1
+    depends_on:
+      - backend
+    networks:
+      - marketflow_net
+    command: python -m app.scheduler
+
+networks:
+  marketflow_net:
+    driver: bridge
+
+volumes:
+  postgres_data:

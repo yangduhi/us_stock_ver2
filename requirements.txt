@@ -1,0 +1,41 @@
+﻿# Core
+fastapi
+uvicorn
+python-dotenv
+requests
+pydantic
+
+# Code Interpreter / Data Science
+pandas
+numpy
+matplotlib
+jupyter
+ipykernel
+
+# Playwright (Web / Vision)
+playwright
+pytest-playwright
+beautifulsoup4
+
+# Postgres (Data)
+psycopg2-binary
+asyncpg
+sqlalchemy
+
+# Knowledge Graph
+networkx
+rdflib
+
+# GitHub Integration
+PyGithub
+gitpython
+
+# AI / LLM
+google-genai
+openai
+langchain
+
+# Application Specific
+yfinance
+fredapi
+redis
