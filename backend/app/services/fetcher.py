@@ -86,10 +86,21 @@ class DataFetcher:
                 elif ticker.upper() in df.columns.get_level_values(0):
                     return df.xs(ticker.upper(), level=0, axis=1)
 
+                # Some yfinance versions can emit (Field, Ticker) ordering.
+                if ticker in df.columns.get_level_values(1):
+                    return df.xs(ticker, level=1, axis=1)
+                elif ticker.upper() in df.columns.get_level_values(1):
+                    return df.xs(ticker.upper(), level=1, axis=1)
+
                 # If unique level 0 values check out (e.g. only 1 ticker but name mismatch?)
                 unique_tickers = df.columns.get_level_values(0).unique()
                 if len(unique_tickers) == 1:
                     return df.droplevel(0, axis=1)
+
+                # Fallback for single-ticker data represented on level 1.
+                unique_level1 = df.columns.get_level_values(1).unique()
+                if len(unique_level1) == 1:
+                    return df.droplevel(1, axis=1)
 
                 return df
             except Exception as e:
