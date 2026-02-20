@@ -5,6 +5,7 @@ from app.schemas.market import MarketDataSchema
 from core.gemini_logger import logger
 import pandas as pd
 import os
+from urllib.parse import urlsplit, urlunsplit
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/marketflow"
@@ -13,7 +14,30 @@ DATABASE_URL = os.getenv(
 if DATABASE_URL.startswith("postgresql://"):
     DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
 
-print(f"DEBUG: Using DATABASE_URL={DATABASE_URL}")
+
+def _mask_database_url(url: str) -> str:
+    try:
+        parts = urlsplit(url)
+        if not parts.netloc:
+            return "***"
+
+        netloc = parts.netloc
+        if "@" in netloc:
+            credentials, host = netloc.rsplit("@", 1)
+            user = credentials.split(":", 1)[0] if credentials else ""
+            masked_user = f"{user[:2]}***" if user else "***"
+            netloc = f"{masked_user}:***@{host}"
+
+        return urlunsplit((parts.scheme, netloc, parts.path, "", ""))
+    except Exception:
+        return "***"
+
+
+logger.log(
+    "system",
+    f"Initializing DB engine with DATABASE_URL={_mask_database_url(DATABASE_URL)}",
+    "db_service",
+)
 engine = create_async_engine(DATABASE_URL)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 

@@ -13,20 +13,13 @@ class Analyzer:
         if df.empty:
             return {"error": "Empty DataFrame"}
 
-        if df.empty:
-            return {"error": "Empty DataFrame"}
+        required_columns = {"Open", "High", "Low", "Close", "Volume"}
+        missing = required_columns.difference(df.columns)
+        if missing:
+            return {"error": f"Missing required columns: {', '.join(sorted(missing))}"}
 
-        with open("analyzer_debug.log", "w", encoding="utf-8") as f:
-            f.write(f"Columns: {df.columns}\n")
-            f.write(f"Head: {df.head(1)}\n")
-            f.write(f"Index: {df.index}\n")
-
-        # Ensure correct column names
-
-        # Ensure correct column names
-
-        # Ensure correct column names
-        # We assume df has standard yfinance columns: Open, High, Low, Close, Volume
+        # Work on a local copy so caller data is not mutated by indicator columns.
+        df = df.copy()
 
         # 1. Calculate Indicators using 'ta' library
         # SMA
